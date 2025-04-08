@@ -9,6 +9,7 @@ export default function App() {
   const [selectedIssue, setSelectedIssue] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [selectedPerspective, setSelectedPerspective] = useState(null);
+  const [issueFetching, setIssueFetching] = useState(false);
 
   useEffect(() => {
     // Function to fetch and parse JSONL file
@@ -44,9 +45,17 @@ export default function App() {
   const handleIssueSelect = (event) => {
     const issueId = parseInt(event.target.value);
     const issue = issues.find(i => i.id === issueId);
-    setSelectedIssue(issue);
-    setSelectedArticle(null);
-    setSelectedPerspective(null);
+    
+    // Start loading state for the selected issue
+    setIssueFetching(true);
+    
+    // Simulate a 7-second loading delay
+    setTimeout(() => {
+      setSelectedIssue(issue);
+      setSelectedArticle(null);
+      setSelectedPerspective(null);
+      setIssueFetching(false);
+    }, 7000); // 7 seconds delay
   };
 
   const handleArticleSelect = (perspective) => {
@@ -59,7 +68,7 @@ export default function App() {
     setSelectedPerspective(null);
   };
 
-  // Show loading state
+  // Show loading state for initial data fetch
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto p-6 text-center">
@@ -111,6 +120,7 @@ export default function App() {
           className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
           onChange={handleIssueSelect}
           defaultValue=""
+          disabled={issueFetching}
         >
           <option value="" disabled>Choose an issue</option>
           {issues.map(issue => (
@@ -119,7 +129,16 @@ export default function App() {
         </select>
       </div>
       
-      {selectedIssue && !selectedArticle && (
+      {/* Show loading state when fetching issue content */}
+      {issueFetching && (
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-4"></div>
+          {/* <p className="text-lg text-gray-600">Loading issue content...</p> */}
+          {/* <p className="text-sm text-gray-500 mt-2">Please wait, this will take a few seconds</p> */}
+        </div>
+      )}
+      
+      {selectedIssue && !selectedArticle && !issueFetching && (
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4">{selectedIssue.issue}</h2>
           
