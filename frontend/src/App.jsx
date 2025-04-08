@@ -100,7 +100,7 @@ export default function App() {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 text-center">Bias Aware News</h1>
+      <h3 className="text-3xl font-bold mb-8 text-center">Enabling Bias Aware News Consumption</h3>
       
       <div className="mb-6">
         <label htmlFor="issue-select" className="block text-lg font-medium mb-2">
@@ -124,12 +124,10 @@ export default function App() {
           <h2 className="text-2xl font-bold mb-4">{selectedIssue.issue}</h2>
           
           <div className="bg-gray-100 p-4 rounded-md mb-6">
-            <h3 className="text-xl font-semibold mb-2">Roundup</h3>
-            <ul className="list-disc pl-5">
-              {selectedIssue.roundup.map((point, idx) => (
-                <li key={idx} className="mb-1 text-left">{point}</li>
-              ))}
-            </ul>
+            <h3 className="text-xl font-semibold mb-2">Event Roundup</h3>
+            <p className="text-left">
+              {selectedIssue.roundup.join(" ")}
+            </p>
           </div>
           
           <h3 className="text-xl font-semibold mb-4">Perspectives</h3>
@@ -167,7 +165,7 @@ export default function App() {
       {selectedArticle && (
         <div className="mt-6">
           <button 
-            className="mb-4 px-4 py-2 rounded bg-white hover:bg-white transition"
+            className="mb-4 px-4 py-2 rounded"
             onClick={handleBackToIssue}
           >
             ← Back to Issue
