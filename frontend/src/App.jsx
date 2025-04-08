@@ -127,7 +127,7 @@ export default function App() {
             <h3 className="text-xl font-semibold mb-2">Roundup</h3>
             <ul className="list-disc pl-5">
               {selectedIssue.roundup.map((point, idx) => (
-                <li key={idx} className="mb-1">{point}</li>
+                <li key={idx} className="mb-1 text-left">{point}</li>
               ))}
             </ul>
           </div>
